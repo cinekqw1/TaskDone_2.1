@@ -1,6 +1,7 @@
 package com.example.marcin.teskdone_2;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,6 +46,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener
     private JSONObject Json_object;
     private  JSONObject Json_response;
     private String URL = "https://shopping-rails-app.herokuapp.com/api";
+    ProgressDialog progress;
 
     Switch switchButton;
     Boolean keepLoginPass;
@@ -177,6 +179,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener
                     }
 
 
+                    progress = ProgressDialog.show(this, "Connecting",
+                            "Please wait", true);
 
                     new CallServiceTask().execute(URL, Email, Password);
 
@@ -321,6 +325,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener
     }
 
     private void responce_manage(JSONObject Json) throws JSONException {
+
+        progress.dismiss();
+
         String x = Json.getString("status");
         View view = getWindow().getDecorView().getRootView();
 
